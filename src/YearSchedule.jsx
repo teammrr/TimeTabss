@@ -12,8 +12,9 @@ function YearSchedule(){
     const { yearId } = useParams(); 
 
     async function getSched(id){
+        const url = 'https://corsproxy.io/?' + encodeURIComponent(`https://school-management-api.xeersoft.co.th/api/timetable/class-year/${id}`);
         var proxy = 'https://cors-anywhere.herokuapp.com/'
-        const response = await axios(proxy +`https://school-management-api.xeersoft.co.th/api/timetable/class-year/${id}`)
+        const response = await axios(url)
         const responseJson = await response.data
         setSched(responseJson);
     }   

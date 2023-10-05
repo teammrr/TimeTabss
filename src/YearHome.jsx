@@ -9,7 +9,8 @@ function YearHome() {
     const [years, setYears] = useState([])
 
     async function getYearArray(){
-        const response = await axios(proxy+'https://school-management-api.xeersoft.co.th/api/timetable/allyesr') 
+        const url = 'https://corsproxy.io/?' + encodeURIComponent('https://school-management-api.xeersoft.co.th/api/timetable/allyesr');
+        const response = await axios(url) 
         const responseJson = await response.data
         setYears(responseJson);
     }
