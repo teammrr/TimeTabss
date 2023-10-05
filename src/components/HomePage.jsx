@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Footer from './footer';
+import Footer from '../components/footer';
+
 
 function HomePage() { 
     return(
+        <>
         <div className='flex items-center justify-center h-screen'>
         <div className="px-8 text-center ">
             <h1 className="mb-2 text-4xl lg:text-5xl font-bold text-[#032654]">Welcome to TimeTabs</h1>
@@ -17,8 +19,10 @@ function HomePage() {
                 <span className="absolute bottom-0 right-0 w-full h-12 -mb-1 -mr-1 transition-all duration-200 ease-linear bg-[#032654] rounded-lg group-hover:mb-0 group-hover:mr-0" data-rounded="rounded-lg"></span>
             </Link>
         </div>
-        <Footer />
         </div>
+        <Footer />
+        </>
+        
 
     )
 }

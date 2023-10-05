@@ -9,19 +9,32 @@ function FormatTime(time) {
 function YearSchedule(){
     console.log("Loading...")
     const [sched, setSched] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
     const { yearId } = useParams(); 
 
     async function getSched(id){
-        const url = 'https://corsproxy.io/?' + encodeURIComponent(`https://school-management-api.xeersoft.co.th/api/timetable/class-year/${id}`);
-        var proxy = 'https://cors-anywhere.herokuapp.com/'
-        const response = await axios(url)
-        const responseJson = await response.data
-        setSched(responseJson);
-    }   
+        try {
+            const url = 'https://corsproxy.io/?' + encodeURIComponent(`https://school-management-api.xeersoft.co.th/api/timetable/class-year/${id}`);
+            const response = await axios(url)
+            const responseJson = await response.data
+            setSched(responseJson);
+            setIsLoading(false);
+        } catch (error) {
+        console.error(error);
+      }
+    };
 
     useEffect(() => {
         getSched(yearId);
     },[yearId])
+
+    const scheduleTitle = sched && sched.length > 0 ? (
+        <div className='mb-4'>
+        <h1 className="m text-4xl font-bold text-[#032654]">{sched[0].lv_title}</h1>
+        </div>
+      ) : (
+        <p className="m text-4xl font-bold text-[#032654]">No schedule found :(</p>
+      );
 
     const scheduleElements = sched && sched.length > 0 ? sched.map(sched => { 
         return (
@@ -41,20 +54,37 @@ function YearSchedule(){
                 </div>
             </div>
         )
-    }) : <p className='m text-4xl font-bold text-[#032654] '>No schedule found :(</p>;
+    }) : <p className='m text-xl font-bold text-[#032654] '>Please go back</p>;
 
-    return(
+    return (
         <>
-        <div className="py-10 text-center">
-            <h1 className="m text-4xl font-bold text-[#032654]">{sched.lv_title}</h1>
-            {/* <h3 className="mb-8 text-xl font-bold text-[#47555e]">Select Your Year</h3> */}
-            <div className="gap-5 grid grid-cols-1 lg:grid-cols-4 lg:gap-10 mx-auto">
-            {scheduleElements}
-            </div>
-        </div>
-
+          <div className="py-10 text-center">
+            {isLoading ? (
+              <div className="flex justify-center items-center h-screen">
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-10 w-10 text-[#032654]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm12 0a8 8 0 00-8-8V0c6.627 0 12 5.373 12 12h-4zm-4 4a4 4 0 110-8 4 4 0 010 8z"
+                  ></path>
+                </svg>
+                <span>Loading...</span>
+              </div>
+            ) : (
+              <>
+                {scheduleTitle}
+                <div className="gap-5 grid grid-cols-1 lg:grid-cols-4 lg:gap-10 mx-auto">{scheduleElements}</div>
+              </>
+            )}
+          </div>
         </>
-    )
+      );
 }
 
 export default YearSchedule
