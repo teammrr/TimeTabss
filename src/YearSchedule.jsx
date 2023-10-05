@@ -46,7 +46,7 @@ function YearSchedule(){
                             <div className="font-bold text-[#021B3B] text-lg mb-2">{FormatTime(sched.tt_time_zone)} - {sched.tt_time_end}</div>
                             <p className="text-[#39637f] text-justify">{sched.tt_title}</p>
                         </div>
-                        <div className="px-6 pb-2 text-justify">
+                        <div className="px-4 pb-2 text-justify">
                             <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-[#032654] mr-2 mb-2">{sched.room || "Not assigned"}</span>
                             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-[#032654] mr-2 mb-2">{sched.fl_code || "Not assigned"}</span>
                         </div>
