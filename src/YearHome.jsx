@@ -5,10 +5,11 @@ import axios from "axios";
 
 
 function YearHome() {
+    var proxy = 'https://cors-anywhere.herokuapp.com/'
     const [years, setYears] = useState([])
 
     async function getYearArray(){
-        const response = await axios('https://school-management-api.xeersoft.co.th/api/timetable/allyesr') 
+        const response = await axios(proxy+'https://school-management-api.xeersoft.co.th/api/timetable/allyesr') 
         const responseJson = await response.data
         setYears(responseJson);
     }

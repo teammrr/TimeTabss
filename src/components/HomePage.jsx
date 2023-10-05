@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Footer from './footer';
 
 function HomePage() { 
     return(
@@ -16,6 +17,7 @@ function HomePage() {
                 <span className="absolute bottom-0 right-0 w-full h-12 -mb-1 -mr-1 transition-all duration-200 ease-linear bg-[#032654] rounded-lg group-hover:mb-0 group-hover:mr-0" data-rounded="rounded-lg"></span>
             </Link>
         </div>
+        <Footer />
         </div>
 
     )
