@@ -1,7 +1,4 @@
 import React from 'react';
-import Nav from '../Nav';
-
-
  
 function Year11() {
     let room = [
@@ -17,10 +14,10 @@ function Year11() {
 
     return(
         <>
-        <Nav />
+
         <div>
-            <div class="flex flex-col gap-4 items-center mt-48 ">
-			<div class="flex justify-center w-full rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110 text-lg font-bold mb-5 text-[#2e346b] ">Year 11</div>
+            <div class="flex flex-col gap-4 items-center mt-16 ">
+			{/* <div class="flex justify-center w-full rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110 text-lg font-bold mb-5 text-[#2e346b] ">Year 11</div> */}
         <div className='grid grid-cols-2 gap-4'>
         {room.map(room =>(
             <div>

@@ -1,8 +1,6 @@
 import React from 'react';
-import Nav from '../Nav';
-
 import { Link } from 'react-router-dom';
-import { createBrowserRouter, Route } from 'react-router-dom';
+
  
 function Year10() {
     let room = [
@@ -13,26 +11,26 @@ function Year10() {
         {name: 'Room E',id: 'y10-e'},
         {name: 'Room F',id: 'y10-f'},
     ]
+    
     return(
         <>
-        <Nav />
         <div>
-            <div class="flex flex-col gap-4 items-center mt-48">
-			<div class="flex justify-center w-full rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110 text-lg font-bold mb-5 text-[#2e346b] ">Year 10</div>
-        <div className='grid grid-cols-2 gap-4'>
-        {room.map(room =>(
-            <div>
-            <Link to={`/year/${room.id}`} class="text-[#3765bf] font-bold text-justify">
-                <div class="flex justify-center w-full rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110 ">
-                    <div key={room.name} class=" max-w-sm rounded-lg items-stretch bg-[#D0D7DC] backdrop-blur-lg m-0.5 ">
-                        <div class="px-6 py-4 text-justify ">
-                            {room.name}
+            <div class="flex flex-col gap-4 items-center mt-16">
+			{/* <div class="flex justify-center w-full rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110 text-lg font-bold mb-5 text-[#2e346b] ">Year 10</div> */}
+                <div className='grid grid-cols-2 gap-4'>
+                {room.map(room =>(
+                    <div>
+                    <Link to={room.id} class="text-[#3765bf] font-bold text-justify">
+                        <div class="flex justify-center w-full rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110 ">
+                            <div key={room.name} class=" max-w-sm rounded-lg items-stretch bg-[#D0D7DC] backdrop-blur-lg m-0.5 ">
+                                <div class="px-6 py-4 text-justify ">
+                                    {room.name}
+                                </div>
+                            </div>
                         </div>
+                    </Link>
                     </div>
-                </div>
-            </Link>
-            </div>
-        ))}
+                ))}
         </div>
 	</div>
         </div>
