@@ -1,4 +1,4 @@
-import { useParams, Link, Routes, Route, BrowserRouter as Router, useLocation } from 'react-router-dom'; 
+import { Link, Routes, Route, BrowserRouter as Router, useLocation } from 'react-router-dom'; 
 import HomePage from './components/HomePage';
 import YearHome from './YearHome';
 import YearSchedule from './YearSchedule';

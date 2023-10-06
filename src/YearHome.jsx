@@ -5,7 +5,7 @@ import axios from "axios";
 
 
 function YearHome() {
-    var proxy = 'https://cors-anywhere.herokuapp.com/'
+    // var proxy = 'https://cors-anywhere.herokuapp.com/'
     const [years, setYears] = useState([])
 
     async function getYearArray(){
