@@ -16,7 +16,7 @@ function AppContent() {
 
   return (
     <>
-      {location.pathname !== '/' && (
+      {!['/', '/years'].includes(location.pathname) && (
         <nav className='pt-4 pl-4'>
           <Link to="/years">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
