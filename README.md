@@ -3,7 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Features
-- [x] View All Year Schedule
+- [x] Bypass School's API CORS to get schedule
 - [ ] Able to view previous / upcoming date schedule
 - [ ] User Dashboard
 
