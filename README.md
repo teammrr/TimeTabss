@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Redesigned TimeTables with react
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -6,6 +6,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - [x] Bypass School's API CORS to get schedule
 - [ ] Able to view previous / upcoming date schedule
 - [ ] User Dashboard
+
+## Suggestions
+Feel free to leave a suggestion [here](https://suggestions.teamrr.live)!
 
 ## Available Scripts
 
