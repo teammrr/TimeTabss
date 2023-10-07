@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,54 +7,91 @@ function FormatTime(time) {
   }
 
 function YearSchedule(){
-    console.log("Loading...")
     const [sched, setSched] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [date, setDate] = useState(new Date());
     const { yearId } = useParams(); 
 
-    async function getSched(id){
+    async function getSched(id, date){
         try {
-            const url = 'https://corsproxy.io/?' + encodeURIComponent(`https://school-management-api.xeersoft.co.th/api/timetable/class-year/${id}`);
+            const url = 'https://corsproxy.io/?' + encodeURIComponent(`https://school-management-api.xeersoft.co.th/api/timetable/date/${date}`);
             const response = await axios(url)
-            const responseJson = await response.data
+            const responseJson = await response.data.filter(item => item.lv_tt_code === `${id}`);
             setSched(responseJson);
             setIsLoading(false);
-        } catch (error) {
-        console.error(error);
-      }
-    };
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        
+        useEffect(() => {
+          console.log("Fetching...")
+          getSched(yearId, date);
+        }, [yearId, date])
 
-    useEffect(() => {
-        getSched(yearId);
-    },[yearId])
+    function handlePrevDay() {
+      const newDate = new Date(date);
+      newDate.setDate(date.getDate() - 1);
+      setDate(newDate);
+      const formattedDate = newDate.toISOString().slice(0, 10);
+      getSched(yearId, formattedDate);
+      console.log("prev day = ", formattedDate);
+    }
+    
+    function handleNextDay() {
+      const newDate = new Date(date);
+      newDate.setDate(date.getDate() + 1);
+      setDate(newDate);
+      const formattedDate = newDate.toISOString().slice(0, 10);
+      getSched(yearId, formattedDate);
 
+      console.log("next day = ", formattedDate);
+    }
+        
     const scheduleTitle = sched && sched.length > 0 ? (
         <div className='mb-4'>
-        <h1 className="m text-4xl font-bold text-[#032654]">{sched[0].lv_title}</h1>
+          <h1 className="m text-4xl font-bold text-[#032654]">{sched[0].lv_title}</h1>
+          <h1 className="m text-sm font-bold text-[#032654]">Date: {sched[0].tt_date}</h1>
         </div>
       ) : (
-        <p className="m text-4xl font-bold text-[#032654]">No schedule found :(</p>
+        <p className="m text-4xl font-bold text-[#032654]"></p>
       );
 
-    const scheduleElements = sched && sched.length > 0 ? sched.map(sched => { 
+    const scheduleElements = useMemo(() => {
+      if (!sched || !Array.isArray(sched) || sched.length === 0) {
+        return <p className='flex items-center justify-center mt-60 ml-20 mr-20  text-xl font-bold text-[#032654] '>Try looking for another date maybe?</p>;
+      }
+
+      return sched.map(sched => { 
+        const timeStart = `${sched.tt_time_zone}`;
+        const duration = `${sched.tt_duration_time}`;
+        const startTime = new Date(`2000-01-01T${timeStart}Z`);
+        const durationTime = new Date(`2000-01-01T${duration}Z`);
+        const endTime = new Date(startTime.getTime() + durationTime.getTime());
+        const timeEnd = endTime.toISOString().slice(11, 16);
+
+        const date = new Date(sched.tt_date);
+        const formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+        const key = `${sched.tt_date}-${sched.tt_time_zone}`;
         return (
-            <div className="flex items-center justify-center" key={sched.tt_header_date}>
-                <div className="w-72 rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110">
-                    <div className="max-w-sm flex flex-col rounded-lg items-stretch bg-[#D0D7DC] backdrop-blur-lg m-0.5 h-full">
-                        <div className="px-4 py-4 text-justify">
-                            <div className="font-bold text-[#032654] text-xl mb-2">{sched.tt_header_date}</div>
-                            <div className="font-bold text-[#021B3B] text-lg mb-2">{FormatTime(sched.tt_time_zone)} - {sched.tt_time_end}</div>
-                            <p className="text-[#39637f] text-justify">{sched.tt_title}</p>
-                        </div>
-                        <div className="px-4 pb-2 text-justify">
-                            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-[#032654] mr-2 mb-2">{sched.room || "Not assigned"}</span>
-                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-[#032654] mr-2 mb-2">{sched.fl_code || "Not assigned"}</span>
-                        </div>
-                    </div>
+          <div className="flex items-center justify-center" key={key}>
+            <div className="w-72 rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110">
+              <div className="max-w-sm flex flex-col rounded-lg items-stretch bg-[#D0D7DC] backdrop-blur-lg m-0.5 h-full">
+                <div className="px-4 py-4 text-justify">
+                  <div className="font-bold text-[#032654] text-xl mb-2">{formattedDate}</div>
+                  <div className="font-bold text-[#021B3B] text-lg mb-2">{FormatTime(sched.tt_time_zone)} - {timeEnd}</div>
+                  <p className="text-[#39637f] text-justify">{sched.tt_title}</p>
                 </div>
+                <div className="px-4 pb-2 text-justify">
+                  <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-[#032654] mr-2 mb-2">{sched.room || "Not assigned"}</span>
+                  <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-[#032654] mr-2 mb-2">{sched.fl_code || "Not assigned"}</span>
+                </div>
+              </div>
             </div>
+          </div>
         )
-    }) : <p className='m text-xl font-bold text-[#032654] '>Please go back</p>;
+      });
+    }, [sched]);
 
     return (
         <>
@@ -79,6 +116,22 @@ function YearSchedule(){
             ) : (
               <>
                 {scheduleTitle}
+                <div className='flex gap-6 items-center justify-center mb-4 mt-4'>
+                <button onClick={handlePrevDay} class="text-[#032654] bg-[#8daac2] hover:bg-[#7c9eb9] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-[#7c9eb9k:focus:ring-blue-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
+</svg>
+Yesterday
+                <span class="sr-only">Prev Day</span>
+              </button>
+                <button onClick={handleNextDay} class="text-[#032654] bg-[#8daac2] hover:bg-[#7c9eb9] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-[#7c9eb9k:focus:ring-blue-800">Tomorrow
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+</svg>
+                <span class="sr-only">Next Day</span>
+              </button>
+
+                </div>
                 <div className="gap-5 grid grid-cols-1 lg:grid-cols-4 lg:gap-10 mx-auto">{scheduleElements}</div>
               </>
             )}
