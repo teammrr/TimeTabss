@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - [ ] User Dashboard
 
 ## Suggestions
-Feel free to leave a suggestion [here](https://suggestions.teamrr.live)!
+Feel free to leave a suggestion [here](https://suggestions.teamrr.live):)
 
 ## Available Scripts
 
