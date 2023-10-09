@@ -52,7 +52,10 @@ function YearSchedule(){
           <h1 className="m text-sm font-bold text-[#032654]">Date: {sched[0].tt_date}</h1>
         </div>
       ) : (
-        <p className="m text-4xl font-bold text-[#032654]"></p>
+        <div className='mb-4'>
+        <h1 className="m text-4xl font-bold text-[#032654]">;-;</h1>
+        <h1 className="m text-sm font-bold text-[#032654]">Date: {date}</h1>
+      </div>
       );
 
     const scheduleElements = useMemo(() => {
@@ -130,7 +133,7 @@ function YearSchedule(){
               </button>
 
                 </div>
-                <div className="gap-5 grid grid-cols-1 lg:grid-cols-4 lg:gap-10 mx-auto">{scheduleElements}</div>
+                <div className="gap-4 grid grid-cols-1 lg:grid-cols-1 lg:gap-2 mx-auto">{scheduleElements}</div>
               </>
             )}
           </div>
