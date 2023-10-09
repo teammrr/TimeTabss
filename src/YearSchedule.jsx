@@ -7,15 +7,19 @@ function FormatTime(time) {
   }
 
 function YearSchedule(){
+    let newDate = new Date();
+    let curDate = newDate.toISOString().slice(0, 10);
     const [sched, setSched] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(curDate);
     const { yearId } = useParams(); 
 
     async function getSched(id, date){
         try {
+            console.log("Loading")
             const url = 'https://corsproxy.io/?' + encodeURIComponent(`https://school-management-api.xeersoft.co.th/api/timetable/date/${date}`);
             const response = await axios(url)
+            console.log("Success")
             const responseJson = await response.data.filter(item => item.lv_tt_code === `${id}`);
             setSched(responseJson);
             setIsLoading(false);
@@ -25,28 +29,22 @@ function YearSchedule(){
         };
         
         useEffect(() => {
-          console.log("Fetching...")
           getSched(yearId, date);
         }, [yearId, date])
 
-    function handlePrevDay() {
-      const newDate = new Date(date);
-      newDate.setDate(date.getDate() - 1);
-      setDate(newDate);
-      const formattedDate = newDate.toISOString().slice(0, 10);
-      getSched(yearId, formattedDate);
-      console.log("prev day = ", formattedDate);
-    }
-    
-    function handleNextDay() {
-      const newDate = new Date(date);
-      newDate.setDate(date.getDate() + 1);
-      setDate(newDate);
-      const formattedDate = newDate.toISOString().slice(0, 10);
-      getSched(yearId, formattedDate);
-
-      console.log("next day = ", formattedDate);
-    }
+        function handlePrevDay() {
+          const newDate = new Date(date);
+          newDate.setDate(new Date(date).getDate() - 1);
+          setDate(newDate.toISOString().slice(0, 10));
+          console.log("prev day = ", newDate.toISOString().slice(0, 10));
+        }
+        
+        function handleNextDay() {
+          const newDate = new Date(date);
+          newDate.setDate(new Date(date).getDate() + 1);
+          setDate(newDate.toISOString().slice(0, 10));
+          console.log("next day = ", newDate.toISOString().slice(0, 10));
+        }
         
     const scheduleTitle = sched && sched.length > 0 ? (
         <div className='mb-4'>
@@ -72,7 +70,7 @@ function YearSchedule(){
 
         const date = new Date(sched.tt_date);
         const formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-        const key = `${sched.tt_date}-${sched.tt_time_zone}`;
+        const key = `${sched.tt_date}-${sched.tt_title}-${sched.tt_time_zone}-${sched.tt_duration_time}-${sched.room}-${sched.fl_code}`;
         return (
           <div className="flex items-center justify-center" key={key}>
             <div className="w-72 rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110">
@@ -117,18 +115,18 @@ function YearSchedule(){
               <>
                 {scheduleTitle}
                 <div className='flex gap-6 items-center justify-center mb-4 mt-4'>
-                <button onClick={handlePrevDay} class="text-[#032654] bg-[#8daac2] hover:bg-[#7c9eb9] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-[#7c9eb9k:focus:ring-blue-800">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
+                <button onClick={handlePrevDay} className="text-[#032654] bg-[#8daac2] hover:bg-[#7c9eb9] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-[#7c9eb9k:focus:ring-blue-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
               </svg>
               Yesterday
-                <span class="sr-only">Prev Day</span>
+                <span className="sr-only">Prev Day</span>
               </button>
-                <button onClick={handleNextDay} class="text-[#032654] bg-[#8daac2] hover:bg-[#7c9eb9] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-[#7c9eb9k:focus:ring-blue-800">Tomorrow
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                <button onClick={handleNextDay} className="text-[#032654] bg-[#8daac2] hover:bg-[#7c9eb9] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-[#7c9eb9k:focus:ring-blue-800">Tomorrow
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
               </svg>
-                <span class="sr-only">Next Day</span>
+                <span className="sr-only">Next Day</span>
               </button>
 
                 </div>
