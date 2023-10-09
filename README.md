@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Features
 - [x] Bypass School's API CORS to get schedule
-- [ ] Able to view previous / upcoming date schedule
+- [x] Able to view previous / upcoming date schedule
 - [ ] User Dashboard
 
 ## Suggestions
