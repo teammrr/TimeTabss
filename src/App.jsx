@@ -2,10 +2,16 @@ import { Link, Routes, Route, BrowserRouter as Router, useLocation } from 'react
 import HomePage from './components/HomePage';
 import YearHome from './YearHome';
 import YearSchedule from './YearSchedule';
+import CreateUser from './CreateUser';
+import LoginUser from './LoginUser';
+import UserHome from './UserHome';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <Router>
+      <ToastContainer />
       <AppContent />
     </Router>
   );
@@ -16,7 +22,7 @@ function AppContent() {
 
   return (
     <>
-      {!['/', '/years'].includes(location.pathname) && (
+      {!['/', '/years','/register'].includes(location.pathname) && (
         <nav className='pt-4 pl-4'>
           <Link to="/years">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -27,6 +33,9 @@ function AppContent() {
       )}
       <Routes>
         <Route path='/' element={<HomePage />} />
+        <Route path='/register' element={<CreateUser />} />
+        <Route path='/login' element={<LoginUser />} />
+        <Route path='/home' element={<UserHome />} />
         <Route path='/years/*' element={<YearHome />} />
         <Route path='/years/year/:yearId' element={<YearSchedule />} />
       </Routes>
