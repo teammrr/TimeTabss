@@ -34,7 +34,7 @@ function CreateUser() {
     try {
       const record = await pb.collection("users").create(formData);
       await pb.collection("users").requestVerification(formData.email);
-      console.log("User created successfully:", record);
+      
       toast.success("Welcome to TimeTabs!"); // Show success toast message
       navigate("/home"); // Redirect to /home on successful registration
     } catch (err) {
