@@ -16,14 +16,14 @@ function YearSchedule() {
 
   async function getSched(id, date) {
     try {
-      console.log("Loading");
+      
       const url =
         "https://corsproxy.io/?" +
         encodeURIComponent(
           `https://school-management-api.xeersoft.co.th/api/timetable/date/${date}`
         );
       const response = await axios(url);
-      console.log("Success");
+      
       const responseJson = await response.data.filter(
         (item) => item.lv_tt_code === `${id}`
       );
@@ -42,14 +42,14 @@ function YearSchedule() {
     const newDate = new Date(date);
     newDate.setDate(new Date(date).getDate() - 1);
     setDate(newDate.toISOString().slice(0, 10));
-    console.log("prev day = ", newDate.toISOString().slice(0, 10));
+    
   }
 
   function handleNextDay() {
     const newDate = new Date(date);
     newDate.setDate(new Date(date).getDate() + 1);
     setDate(newDate.toISOString().slice(0, 10));
-    console.log("next day = ", newDate.toISOString().slice(0, 10));
+    
   }
 
   const scheduleTitle =
