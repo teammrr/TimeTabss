@@ -90,7 +90,7 @@ function YearSchedule() {
       });
       const key = `${sched.tt_date}-${sched.tt_title}-${sched.tt_time_zone}-${sched.tt_duration_time}-${sched.room}-${sched.fl_code}`;
       return (
-        <div className="flex items-center justify-center" kemy={key}>
+        <div className="flex items-center justify-center" key={key}>
           <div className="w-72 rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110">
             <div className="max-w-sm flex flex-col rounded-lg items-stretch bg-[#D0D7DC] backdrop-blur-lg m-0.5 h-full">
               <div className="px-4 py-4 text-justify">
