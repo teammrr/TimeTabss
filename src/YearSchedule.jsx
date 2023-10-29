@@ -16,14 +16,12 @@ function YearSchedule() {
 
   async function getSched(id, date) {
     try {
-      console.log("Loading");
       const url =
         "https://corsproxy.io/?" +
         encodeURIComponent(
           `https://school-management-api.xeersoft.co.th/api/timetable/date/${date}`
         );
       const response = await axios(url);
-      console.log("Success");
       const responseJson = await response.data.filter(
         (item) => item.lv_tt_code === `${id}`
       );
@@ -42,14 +40,12 @@ function YearSchedule() {
     const newDate = new Date(date);
     newDate.setDate(new Date(date).getDate() - 1);
     setDate(newDate.toISOString().slice(0, 10));
-    console.log("prev day = ", newDate.toISOString().slice(0, 10));
   }
 
   function handleNextDay() {
     const newDate = new Date(date);
     newDate.setDate(new Date(date).getDate() + 1);
     setDate(newDate.toISOString().slice(0, 10));
-    console.log("next day = ", newDate.toISOString().slice(0, 10));
   }
 
   const scheduleTitle =
@@ -94,7 +90,7 @@ function YearSchedule() {
       });
       const key = `${sched.tt_date}-${sched.tt_title}-${sched.tt_time_zone}-${sched.tt_duration_time}-${sched.room}-${sched.fl_code}`;
       return (
-        <div className="flex items-center justify-center" key={key}>
+        <div className="flex items-center justify-center" kemy={key}>
           <div className="w-72 rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110">
             <div className="max-w-sm flex flex-col rounded-lg items-stretch bg-[#D0D7DC] backdrop-blur-lg m-0.5 h-full">
               <div className="px-4 py-4 text-justify">

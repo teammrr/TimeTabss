@@ -8,7 +8,10 @@ function HomePage() {
       <div className="flex items-center justify-center h-screen">
         <div className="px-8 text-center ">
           <h1 className="mb-2 text-4xl lg:text-5xl font-bold text-[#032654]">
-            Welcome to TimeTabs
+            Welcome to{" "}
+            {/* <span class="bg-blue-300 to-transparent bg-repeat bg-size bg-position"> */}
+            TimeTabs
+            {/* </span> */}
           </h1>
           <h3 className="mb-4 text-xl lg:text-2xl font-bold text-[#47555e]">
             View your schedule at a glance :D

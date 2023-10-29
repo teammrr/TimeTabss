@@ -13,6 +13,7 @@ import LoginUser from "./LoginUser";
 import UserHome from "./UserHome";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CallBackLine from "./CallbackLine";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function AppContent() {
         <Route path="/home" element={<UserHome />} />
         <Route path="/years/*" element={<YearHome />} />
         <Route path="/years/year/:yearId" element={<YearSchedule />} />
+        <Route path="/callback" element={<CallBackLine />} />
       </Routes>
     </>
   );
