@@ -47,21 +47,25 @@ function YearSchedule() {
     newDate.setDate(new Date(date).getDate() + 1);
     setDate(newDate.toISOString().slice(0, 10));
   }
-
+  const date1 = new Date(sched[0]?.tt_date || date);
+  const formattedDate = date1.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
   const scheduleTitle =
     sched && sched.length > 0 ? (
       <div className="mb-4">
         <h1 className="m text-4xl font-bold text-[#032654]">
           {sched[0].lv_title}
         </h1>
-        <h1 className="m text-sm font-bold text-[#032654]">
-          Date: {sched[0].tt_date}
-        </h1>
+        <h1 className="m text-sm font-bold text-[#032654]">{formattedDate}</h1>
       </div>
     ) : (
       <div className="mb-4">
-        <h1 className="m text-4xl font-bold text-[#032654]">;-;</h1>
-        <h1 className="m text-sm font-bold text-[#032654]">Date: {date}</h1>
+        <h1 className="m text-4xl font-bold text-[#032654]">It's Weekend!</h1>
+        <h1 className="m text-sm font-bold text-[#032654]">{formattedDate}</h1>
       </div>
     );
 
@@ -69,7 +73,7 @@ function YearSchedule() {
     if (!sched || !Array.isArray(sched) || sched.length === 0) {
       return (
         <p className="flex items-center justify-center mt-60 ml-20 mr-20  text-xl font-bold text-[#032654] ">
-          Try looking for another date maybe?
+          You've Got No Class Today!
         </p>
       );
     }
@@ -81,26 +85,16 @@ function YearSchedule() {
       const durationTime = new Date(`2000-01-01T${duration}Z`);
       const endTime = new Date(startTime.getTime() + durationTime.getTime());
       const timeEnd = endTime.toISOString().slice(11, 16);
-
-      const date = new Date(sched.tt_date);
-      const formattedDate = date.toLocaleDateString("en-US", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-      });
-      const key = `${sched.tt_date}-${sched.tt_title}-${sched.tt_time_zone}-${sched.tt_duration_time}-${sched.room}-${sched.fl_code}`;
+      const key = `${sched.tt_date}-${sched.tt_title}-${sched.tt_time_zone}`;
       return (
         <div className="flex items-center justify-center" key={key}>
-          <div className="w-72 rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110">
-            <div className="max-w-sm flex flex-col rounded-lg items-stretch bg-[#D0D7DC] backdrop-blur-lg m-0.5 h-full">
+          <div className="w-72 rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110 ">
+            <div className="max-w-sm flex flex-col rounded-lg items-stretch bg-[#D0D7DC] hover:bg-[#d0d7dca2] transition ease-in-out duration-300 backdrop-blur-lg m-0.5 h-full">
               <div className="px-4 py-4 text-justify">
-                <div className="font-bold text-[#032654] text-xl mb-2">
-                  {formattedDate}
-                </div>
                 <div className="font-bold text-[#021B3B] text-lg mb-2">
                   {FormatTime(sched.tt_time_zone)} - {timeEnd}
                 </div>
-                <p className="text-[#39637f] text-justify">{sched.tt_title}</p>
+                <p className="text-[#39637f]  text-justify">{sched.tt_title}</p>
               </div>
               <div className="px-4 pb-2 text-justify">
                 <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-[#032654] mr-2 mb-2">
@@ -119,7 +113,7 @@ function YearSchedule() {
 
   return (
     <>
-      <div className="py-10 text-center">
+      <div className="py-4 text-center">
         {isLoading ? (
           <div className="flex justify-center items-center h-screen">
             <svg
@@ -191,7 +185,7 @@ function YearSchedule() {
                 <span className="sr-only">Next Day</span>
               </button>
             </div>
-            <div className="gap-4 grid grid-cols-1 lg:grid-cols-1 lg:gap-2 mx-auto">
+            <div className="gap-2 grid grid-cols-1 lg:grid-cols-1 lg:gap-2 mx-auto">
               {scheduleElements}
             </div>
           </>
