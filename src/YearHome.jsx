@@ -31,10 +31,10 @@ function YearHome() {
               to={`year/${year.lv_tt_code}`}
               className=" text-lg text-[#032654]  "
             >
-              <div className="rounded-lg overflow-hidden transition duration-300 ease-in-out hover:scale-110 ">
+              <div className="rounded-lg overflow-hidden transition duration-500 ease-in-out hover:scale-105  ">
                 <div
                   key={year.lv_title}
-                  className=" rounded-lg items-stretch bg-[#D0D7DC] backdrop-blur-lg m-0.5 "
+                  className=" rounded-lg items-stretch bg-[#D0D7DC] backdrop-blur-lg m-0.5 hover:bg-[#d0d7dc92] transition duration-500 ease-in-out  "
                 >
                   <div className="p-4 text-center ">{year.lv_title}</div>
                 </div>
@@ -58,7 +58,7 @@ function YearHome() {
       </div>
       <div className=" mb-12 text-[#032654] text-sm font-semibold text-center">
         <span>
-          Made with ♡ by Teamm |{" "}
+          Made with 💙 by Teamm |{" "}
           <a href="https://instagram.com/teammteam"> :D</a>
         </span>
       </div>
