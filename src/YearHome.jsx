@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Footer from "./components/footer";
 
 function YearHome() {
   // var proxy = 'https://cors-anywhere.herokuapp.com/'
@@ -47,21 +48,14 @@ function YearHome() {
 
   return (
     <>
-      <div className="py-10 text-center">
-        <h1 className="m text-4xl font-bold text-[#032654]">TimeTabs :P</h1>
+      <div className="text-center">
+        <h1 className="pt-10 text-4xl font-bold text-[#032654]">TimeTabs :P</h1>
         <h3 className="mb-8 text-xl font-bold text-[#47555e]">
           Select Your Year
         </h3>
-        <div className="grid grid-cols-2 gap-4 ml-6 mr-6 mb-2">
-          {yearElements}
-        </div>
+        <div className="grid grid-cols-2 gap-4 ml-6 mr-6">{yearElements}</div>
       </div>
-      <div className=" mb-12 text-[#032654] text-sm font-semibold text-center">
-        <span>
-          Made with 💙 by Teamm |{" "}
-          <a href="https://instagram.com/teammteam"> :D</a>
-        </span>
-      </div>
+      <Footer />
     </>
   );
 }
